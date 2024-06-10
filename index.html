@@ -160,7 +160,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/06/10/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+          <a href="/2024/06/10/hello-world/" class="post-title-link" itemprop="url">Untitled</a>
         </h2>
 
         <div class="post-meta-container">
@@ -173,6 +173,13 @@
 
       <time title="Created: 2024-06-10 19:45:56" itemprop="dateCreated datePublished" datetime="2024-06-10T19:45:56+08:00">2024-06-10</time>
     </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-06-11 00:25:42" itemprop="dateModified" datetime="2024-06-11T00:25:42+08:00">2024-06-11</time>
+    </span>
 
   
 </div>
@@ -184,19 +191,56 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+          <h1 id="Docker-版本"><a href="#Docker-版本" class="headerlink" title="Docker  版本"></a>Docker  版本</h1><p><em>todolist</em> <del>暑假有时间再做</del> nfs </p>
+<p>![image-20240608003820797](&#x2F;Users&#x2F;lx_zjk&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240608003820797.png)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu /bin/bash #进入即可 这类似虚拟机的操作 本实验同时实现了docker 直接进入虚拟机的版本 和dockerfile版本的编写</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="单机跑HPL"><a href="#单机跑HPL" class="headerlink" title="单机跑HPL"></a>单机跑HPL</h3><p>dockerfile版本 后面构建四台虚拟机的网络配置的过程在容器内单独完成 大功告成！</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /home/ubuntu</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get -y update &amp;&amp; apt -y install build-essential &amp;&amp; apt -y install wget &amp;&amp; apt -y install ssh &amp;&amp; apt -y install gfortran &amp;&amp;\</span></span><br><span class="line"><span class="language-bash">wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.6.tar.gz &amp;&amp; tar xvf openmpi-4.1.6.tar.gz &amp;&amp; <span class="built_in">rm</span> openmpi-4.1.6.tar.gz &amp;&amp;\</span></span><br><span class="line"><span class="language-bash">wget http://www.netlib.org/blas/blas-3.11.0.tgz &amp;&amp; tar -zxvf blas-3.11.0.tgz  &amp;&amp; <span class="built_in">rm</span> blas-3.11.0.tgz &amp;&amp; <span class="built_in">cd</span> BLAS-3.11.0 &amp;&amp; apt install -y gfortran &amp;&amp; make &amp;&amp; <span class="built_in">cd</span> .. &amp;&amp;\</span></span><br><span class="line"><span class="language-bash">wget http://www.netlib.org/blas/blast-forum/cblas.tgz &amp;&amp; tar -zxvf cblas.tgz &amp;&amp; <span class="built_in">rm</span> cblas.tgz &amp;&amp; wget https://netlib.org/benchmark/hpl/hpl-2.3.tar.gz &amp;&amp; tar xvf hpl-2.3.tar.gz &amp;&amp; <span class="built_in">rm</span> hpl-2.3.tar.gz &amp;&amp;\ </span></span><br><span class="line">mkdir mpi &amp;&amp; cd openmpi-<span class="number">4.1</span>.<span class="number">6</span> &amp;&amp; ./configure --prefix=/home/ubuntu/mpi &amp;&amp; make &amp;&amp; make install &amp;&amp; \</span><br><span class="line">export PATH=<span class="string">&quot;/home/ubuntu/mpi/bin:$PATH&quot;</span> &amp;&amp; export LD_LIBRARY_PATH=<span class="string">&quot;/home/ubuntu/mpi/lib:$LD_LIBRARY_PATH&quot;</span> &amp;&amp; cd ..</span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./Makefile.<span class="keyword">in</span> /home/ubuntu/CBLAS</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./c_dblat1.f /home/ubuntu/CBLAS/testing</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./c_sblat1.f /home/ubuntu/CBLAS/testing</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./Make.Linux_PII /home/ubuntu/hpl-2.3</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">cd</span> CBLAS &amp;&amp; make &amp;&amp; <span class="built_in">cd</span> .. &amp;&amp; <span class="built_in">cd</span> hpl-2.3 &amp;&amp; make <span class="built_in">arch</span>=Linux_PII &amp;&amp; <span class="built_in">cd</span> /home/ubuntu/hpl-2.3/bin/Linux_PII &amp;&amp; /home/ubuntu/mpi/bin/mpirun --allow-run-as-root -n 4 ./xhpl</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> /bin/bash</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>没换镜像源 跑了将近20分钟 下面是完整的截图</p>
+<p>![image-20240609100109185](&#x2F;Users&#x2F;lx_zjk&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240609100109185.png)</p>
+<p>内容和虚拟机上差不多，所以就把所有的过程记在下面了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install build-essential</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">安装 mpi</span></span><br><span class="line">wget https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.6.tar.gz</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">发现 wgt没安装上去</span></span><br><span class="line">apt install wget</span><br><span class="line">tar -zxvf openmpi-4.1.6.tar.gz </span><br><span class="line">cd openmpi-4.1.6/</span><br><span class="line">./configure --prefix=/home/ubuntu/mpi #to-do-list:configure</span><br><span class="line">make #Makefile生成了 直接make 这一步慢的离谱</span><br><span class="line">make install</span><br><span class="line">cd ../mpi #这里发现里面出现了bin etc include lib share这些</span><br><span class="line">apt install vim #发现没下vim 这个build-essentail也妹东西啊(((</span><br><span class="line">export PATH=&quot;/home/ubuntu/mpi/bin:$PATH&quot;</span><br><span class="line">export LD_LIBRARY_PATH=&quot;/home/ubuntu/mpi/include:$LD_LIBRARY_PATH&quot;#伏笔 </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="built_in">export</span> LD_LIBRARY_PATH=<span class="string">&quot;/home/ubuntu/mpi/lib:<span class="variable">$LD_LIBRARY_PATH</span>&quot;</span><span class="comment">#伏笔</span></span></span><br><span class="line">apt install ssh #mpi 跑的时候报错让我安装ssh 安装完之后就能正常运行了</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>![d46be7b897d288bf6b55f6ce0d4d352c](&#x2F;Users&#x2F;lx_zjk&#x2F;Library&#x2F;Containers&#x2F;com.tencent.qq&#x2F;Data&#x2F;Library&#x2F;Application Support&#x2F;QQ&#x2F;nt_qq_04ad0d450d80ea40dca335f2d8722161&#x2F;nt_data&#x2F;Pic&#x2F;2024-06&#x2F;Ori&#x2F;d46be7b897d288bf6b55f6ce0d4d352c.png)</p>
+<p>这样说明<strong>mpi</strong>安装完成了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.netlib.org/blas/blas-3.11.0.tgz</span><br><span class="line">tar -zxvf blas-3.11.0.tgz</span><br><span class="line">make #然后发现gfortran没装</span><br><span class="line">apt install gfortran</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>![image-20240608012458281](&#x2F;Users&#x2F;lx_zjk&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240608012458281.png)</p>
+<p>进入<strong>testing</strong> 然后测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.netlib.org/blas/blast-forum/cblas.tgz</span><br><span class="line">tar -zxvf cblas.tgz</span><br><span class="line">/home/ubuntu/BLAS-3.11.0/blas_LINUX.a #修改makefile.in</span><br></pre></td></tr></table></figure>
+
+<p>![image-20240608012902760](&#x2F;Users&#x2F;lx_zjk&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240608012902760.png)</p>
+<p>老朋友了 记录下.a文件的位置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/ubuntu/CBLAS/lib/cblas_LINUX.a</span><br></pre></td></tr></table></figure>
+
+<p>![image-20240608013514547](&#x2F;Users&#x2F;lx_zjk&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240608013514547.png)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://netlib.org/benchmark/hpl/hpl-2.3.tar.gz</span><br><span class="line">tar -zxvf hpl-2.3.tar.gz </span><br></pre></td></tr></table></figure>
+
+<p>然后就是经典的Makefile环节 这次写的明显比上次快</p>
+<p>出现的问题是</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g77没有 替换成了gfortran</span><br><span class="line">./xhpl: error while loading shared libraries: libmpi.so.40: cannot open shared object file: No such file or directory</span><br><span class="line">发现 mpi的 export LD_LIBRARY_PATH=&quot;/home/ubuntu/mpi/include:$LD_LIBRARY_PATH&quot;写成了include 红温了</span><br></pre></td></tr></table></figure>
+
+<p>至此 单机HPL就跑完了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec hpl_1 bash -c &quot;cd /home/ubuntu/hpl-2.3/bin/Linux_PII &amp;&amp; /home/ubuntu/mpi/bin/mpirun --allow-run-as-root -n 4 ./xhpl&quot;</span><br></pre></td></tr></table></figure>
+
+<p>![image-20240608020602797](&#x2F;Users&#x2F;lx_zjk&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240608020602797.png)</p>
+<h3 id="配置ssh-跑多机"><a href="#配置ssh-跑多机" class="headerlink" title="配置ssh 跑多机"></a>配置ssh 跑多机</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt-get update &amp;&amp; apt-get install -y iputils-ping</span><br><span class="line">zhoujunkangdeMacBook-Pro:~ lx_zjk$ docker commit boring_hertz hpl_image</span><br><span class="line">sha256:63f74ece6d6d378d7d72070046de195e3196a12e08a760185d06d3bf5548a6ff #这里docker里面就有东西了</span><br><span class="line">docker run -di --name hpl_1 --network hpl_net hpl_image</span><br></pre></td></tr></table></figure>
+
+<p>![image-20240608084328448](&#x2F;Users&#x2F;lx_zjk&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240608084328448.png)</p>
+<p>![image-20240608091122925](&#x2F;Users&#x2F;lx_zjk&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240608091122925.png)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">docker默认设置了密码</span></span><br><span class="line">passwd root #然后修改密码</span><br><span class="line">vim /etc/ssh/sshd_config</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">修改这些</span></span><br><span class="line">Port 22 </span><br><span class="line">PermitRootLogin yes</span><br><span class="line">PermitEmptyPasswords yes</span><br><span class="line">PasswordAuthentication  yes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub hpl_4</span><br><span class="line">ssh hpl_4 #连接成功</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub hpl_2</span><br><span class="line">ssh-copy-id -i ~/.ssh/id_rsa.pub hpl_3</span><br></pre></td></tr></table></figure>
+
+<p>这里mpirun要加两个参数 一个是<strong>allow-run-as-root</strong> 一个是**–prefix &#x2F;home&#x2F;ubuntu&#x2F;mpi** reference:<a target="_blank" rel="noopener" href="https://blog.csdn.net/grasshoper97/article/details/90737605">openMPI多节点无法执行的问题_mpirun host-CSDN博客</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mpirun --allow-run-as-root --prefix /home/ubuntu/mpi --hostfile myhostfile ./xhpl  </span><br></pre></td></tr></table></figure>
+
+<p>用docker在本地写的话就是</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec hpl_1 bash -c &quot;cd /home/ubuntu/hpl-2.3/bin/Linux_PII &amp;&amp; /home/ubuntu/mpi/bin/mpirun --allow-run-as-root --hostfile myhostfile --prefix /home/ubuntu/mpi ./xhpl&quot;</span><br></pre></td></tr></table></figure>
+
+<p>结果如下</p>
+<p>![image-20240608120743563](&#x2F;Users&#x2F;lx_zjk&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240608120743563.png)</p>
+<p>![image-20240608120447164](&#x2F;Users&#x2F;lx_zjk&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20240608120447164.png)</p>
 
       
     </div>
